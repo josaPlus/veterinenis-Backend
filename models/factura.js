@@ -1,6 +1,13 @@
 const db = require('../config/database');
 
 const Factura = {
+
+    // obtener todas las facturas
+    getFacturas: (callback) => {
+        const sql = `SELECT * FROM FACTURA`;
+        db.query(sql, callback);
+    },
+
     crearFactura: async (dato, callback) => {
         const sql = `
             INSERT INTO FACTURA (costo_total, fecha_creacion, metodo_pago, id_cita, id_paciente) 
