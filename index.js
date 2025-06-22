@@ -11,6 +11,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// rutas
+app.use('/api/facturas', require('./routes/facturas'));
+app.use('/api/productos', require('./routes/productos'));
 
 // conexion database
 db.connect(err => {
