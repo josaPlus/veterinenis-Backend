@@ -44,6 +44,11 @@ const Cita = {
     db.query(sql, [id_cita], cb);
   },
 
+  getByFecha: (fecha, cb) => {
+    const sql = 'SELECT * FROM CITAS WHERE DATE(fecha_cita) = ?';
+    db.query(sql, [fecha], cb);
+  },
+
   create: (
     { fecha_cita, motivo, detalles = null, peso = null, id_paciente, id_veterinario },
     callback
