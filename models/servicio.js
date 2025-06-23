@@ -1,67 +1,30 @@
 const db = require('../config/database');
 
-class servicios {
-    //POST
-    static async agregarServicio(nombre, descripcion, costo) {
-        try {
-            const [result] = await db.query(
-                'INSERT INTO SERVICIO (nombre, descripcion, costo) VALUES (?, ?, ?)', 
-                [nombre, descripcion, costo]
-            );
-            return { id: result.insertId, nombre, descripcion, costo };
-        } catch (error) {
-            throw new Error(`Error agregando el servicio: ${error.message}`);
-        }
-    }
+const Servicios = {
+    getAll: (callback) => {
+        const sql = 'SELECT * FROM SERVICIO';
+        db.query(sql, callback);
+    },
 
-    //PUT
-    static async editarServicio(id, nombre, descripcion, costo) {
-        try {
-            const [result] = await db.query(
-                'UPDATE SERVICIO SET nombre = ?, descripcion = ?, costo = ? WHERE id = ?', 
-                [nombre, descripcion, costo, id]
-            );
-            if (result.affectedRows === 0) {
-                return null; 
-            }
-            return { id, nombre, descripcion, costo };
-        } catch (error) {
-            throw new Error(`Error actualizando el servicio: ${error.message}`);
-        }
-    }
+    getById: (id, callback) => {
+        const sql = 'SELECT * FROM SERVICIO WHERE id = ?';
+        db.query(sql, [id], callback);
+    },
 
-    //DELETE
-    static async eliminarServicio(id) {
-        try {
-            const [result] = await db.query(
-                'DELETE FROM SERVICIO WHERE id = ?', 
-                [id]
-            );
-            return result.affectedRows > 0; 
-        } catch (error) {
-            throw new Error(`Error eliminando el servicio: ${error.message}`);
-        }
-    }
+    agregarServicio: (nombre, descripcion, costo, callback) => {
+        const sql = 'INSERT INTO SERVICIO (nombre, descripcion, costo) VALUES (?, ?, ?)';
+        db.query(sql, [nombre, descripcion, costo], callback);
+    },
 
-    //GET todos
-    static async getAll() {
-        try {
-            const [rows] = await db.query('SELECT * FROM SERVICIO'); 
-            return rows;
-        } catch (error) {
-            throw new Error(`Error obteniendo todos los servicios: ${error.message}`);
-        }
-    }
+    editarServicio: (id, nombre, descripcion, costo, callback) => {
+        const sql = 'UPDATE SERVICIO SET nombre = ?, descripcion = ?, costo = ? WHERE id = ?';
+        db.query(sql, [nombre, descripcion, costo, id], callback);
+    },
 
-    //GET por ID
-    static async getById(id) {
-        try {
-            const [rows] = await db.query('SELECT * FROM SERVICIO WHERE id = ?', [id]); 
-            return rows[0] || null; 
-        } catch (error) {
-            throw new Error(`Error obteniendo el servicio con el Id: ${error.message}`);
-        }
+    eliminarServicio: (id, callback) => {
+        const sql = 'DELETE FROM SERVICIO WHERE id = ?';
+        db.query(sql, [id], callback);
     }
-}
+};
 
-module.exports = servicios;
+module.exports = Servicios;
