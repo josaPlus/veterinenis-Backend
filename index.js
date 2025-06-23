@@ -6,13 +6,12 @@ const db = require('./config/database');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/citas', require('./routes/citas'));
 
-// conexion database
 db.connect(err => {
     if (err) {
         console.error('Error connecting to the database:', err);

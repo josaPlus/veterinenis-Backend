@@ -2,10 +2,12 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 const connection = mysql.createConnection({
-    host: process.env.host || 'localhost',
-    user: process.env.username || 'root',
-    password: process.env.password || '',
-    database: process.env.database || 'test',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || '',
+  port: process.env.DB_PORT || 3308
 });
+
 
 module.exports = connection;
