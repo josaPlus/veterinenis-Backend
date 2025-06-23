@@ -1,19 +1,19 @@
 const db = require('../config/database');
 
 const Usuario = {
-  create: ({ nombre_usuario, contrasena, rol }, callback) => {
+  create: ({ nombre_usuario, contrasena, rol, nombre_pila }, callback) => {
     const sql = `
       INSERT INTO USUARIO
-        (nombre_usuario, contrasena, rol, fecha_creacion)
+        (nombre_usuario, contrasena, rol, fecha_creacion, nombre_pila)
       VALUES
-        (?, ?, ?, NOW())
+        (?, ?, ?, ?, NOW())
     `;
-    db.query(sql, [nombre_usuario, contrasena, rol], callback);
+    db.query(sql, [nombre_usuario, contrasena, rol, nombre_pila], callback);
   },
 
   login: (nombre_usuario, contrasena, callback) => {
     const sql = `
-      SELECT id, nombre_usuario, rol, fecha_creacion
+      SELECT id, nombre_usuario, rol, fecha_creacion, nombre_pila
       FROM USUARIO
       WHERE nombre_usuario = ? AND contrasena = ?
       LIMIT 1
