@@ -6,16 +6,18 @@ const db = require('./config/database');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//rutas
+app.use('/api/citas', require('./routes/citas'));
+app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/pacientes', require('./routes/pacientes'))
 app.use('/api/propietarios', require('./routes/propietarios'))
 app.use('/api/facturas', require('./routes/facturas'));
 app.use('/api/productos', require('./routes/productos'));
+app.use('/api/servicios', require('./routes/servicios'));
+
 
 // conexion database
 db.connect(err => {
