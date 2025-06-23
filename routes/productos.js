@@ -11,6 +11,15 @@ router.get('/', (req, res) => {
     });
 });
 
+// buscar por id
+router.get('/:id', (req, res) => {
+    Producto.buscarProductoPorId(req.params.id, (error, result) => {
+        if (error) return res.status(500).json({ error: error.message });
+        if (!result || result.length === 0) return res.status(404).json({ message: 'Producto no encontrado' });
+        res.status(200).json({ producto: result[0] });
+    });
+})
+
 // Crear una nueva factura
 router.post('/', async (req, res) => {
     Producto.agregarProducto(req.body, (error, result) => {
