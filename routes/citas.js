@@ -82,6 +82,18 @@ router.get('/:id', (req, res) => {
   });
 });
 
+router.get('/porFecha', (req, res) => {
+  const { fecha } = req.query;
+  if (!fecha) {
+    return res.status(400).json({ error: 'Falta la fecha en el query (yyyy-MM-dd)' });
+  }
+
+  Cita.getByFecha(fecha, (err, citas) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(citas);
+  });
+});
+
 router.post('/', (req, res) => {
   Cita.create(req.body, (err, result) => {
     if (err) return res.status(500).json({ error: err.message });

@@ -42,7 +42,7 @@ const Paciente = {
       paciente.foto_perfil, 
       paciente.id_propietario
     ];
-    db.query('INSERT INTO PACIENTE (nombre, especie, sexo, fecha_nacimiento, raza, padecimientos, intervenciones, foto_perfil, id_propietario) VALUES (?,?,?,?,?,?,?)', values, callback);
+    db.query('INSERT INTO PACIENTE (nombre, especie, sexo, fecha_nacimiento, raza, padecimientos, intervenciones, foto_perfil, id_propietario) VALUES (?,?,?,?,?,?,?,?,?)', values, callback);
   },
   
   update: (id, paciente, callback) => {
