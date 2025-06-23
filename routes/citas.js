@@ -82,6 +82,20 @@ router.get('/:id', (req, res) => {
   });
 });
 
+router.post('/porFecha', (req, res) => {
+  const { fecha } = req.body;
+
+  if (!fecha) {
+    return res.status(400).json({ error: 'Falta el campo "fecha" en el cuerpo de la solicitud' });
+  }
+
+  Cita.getByFecha(fecha, (err, citas) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(citas);
+  });
+});
+
+
 router.post('/', (req, res) => {
   Cita.create(req.body, (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
