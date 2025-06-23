@@ -3,7 +3,7 @@ const router = express.Router();
 const Servicio = require('../models/servicio');
 
 //GET
-router.get('/api/servicios', (req, res) => {
+router.get('/', (req, res) => {
     Servicio.getAll((error, result) => {
         if (error) return res.status(500).json({ error: error.message });
         if (!result || result.length === 0) return res.status(404).json({ message: 'No se encontraron servicios' });
@@ -12,7 +12,7 @@ router.get('/api/servicios', (req, res) => {
 });
 
 //GET por Id
-router.get('/api/servicios/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     Servicio.getById(req.params.id, (error, result) => {
         if (error) return res.status(500).json({ error: error.message });
         if (!result || result.length === 0) return res.status(404).json({ message: 'Servicio no encontrado' });
@@ -21,7 +21,7 @@ router.get('/api/servicios/:id', (req, res) => {
 });
 
 //POST
-router.post('/api/servicios', (req, res) => {
+router.post('/', (req, res) => {
     const { nombre, descripcion, costo } = req.body;
     if (!nombre || !descripcion || costo === undefined) {
         return res.status(400).json({ message: 'El nombre, la descripción y el costo son requeridos' });
@@ -34,7 +34,7 @@ router.post('/api/servicios', (req, res) => {
 });
 
 //PUT
-router.put('/api/servicios/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const { nombre, descripcion, costo } = req.body;
     if (!nombre || !descripcion || costo === undefined) {
         return res.status(400).json({ message: 'El nombre, la descripción y el costo son requeridos' });
@@ -48,7 +48,7 @@ router.put('/api/servicios/:id', (req, res) => {
 });
 
 //DELETE
-router.delete('/api/servicios/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     Servicio.eliminarServicio(req.params.id, (error, result) => {
         if (error) return res.status(500).json({ error: error.message });
         if (!result || result.affectedRows === 0) return res.status(404).json({ message: 'Servicio no encontrado o ya eliminado' });
