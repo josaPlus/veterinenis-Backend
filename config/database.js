@@ -18,4 +18,4 @@ const connection = mysql.createConnection({
     database: process.env.DATABASE,
 });
 
-module.exports = connection.promise();
+module.exports = connection;
