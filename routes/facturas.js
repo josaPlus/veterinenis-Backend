@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Factura = require('../models/factura');
 
+router.get('/', (req, res) => {
+    Factura.getFacturas((error, result) => {
+        if (error) return res.status(500).json({ error: error.message });
+        if (!result || result.length === 0) return res.status(404).json({ message: 'No se encontraron facturas' });
+        res.status(200).json({ facturas: result });
+    });
+});
 // Crear una nueva factura
 router.post('/', (req, res) => {
     Factura.crearFactura(req.body, (error, result) => {
