@@ -34,6 +34,23 @@ const Factura = {
         `;
         db.query(sql, [id], callback);
     },
+    // actualizar factura
+    actualizarFactura: (id, dato, callback) => {
+        const sql = `
+            UPDATE FACTURA
+            SET costo_total = ?, fecha_creacion = ?, metodo_pago = ?, id_cita = ?, id_paciente = ?
+            WHERE id = ?
+        `;
+        const valores = [
+            dato.costo_total,
+            dato.fecha_creacion,
+            dato.metodo_pago,
+            dato.id_cita,
+            dato.id_paciente,
+            id
+        ];
+        db.query(sql, valores, callback);
+    }
 }
 
 module.exports = Factura;

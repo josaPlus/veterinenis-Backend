@@ -49,6 +49,12 @@ const Producto = {
     filtrarProductoPorNombre: (nombre, callback) => {
         const sql = `SELECT * FROM PRODUCTO WHERE nombre LIKE ?`;
         db.query(sql, [`%${nombre}%`], callback);
+    },
+
+    // buscar por id
+    buscarProductoPorId: (id, callback) => {
+        const sql = `SELECT * FROM PRODUCTO WHERE id = ?`;
+        db.query(sql, [id], callback);
     }
 };
 

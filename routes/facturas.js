@@ -36,4 +36,13 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+// actualizar ufactura
+router.put('/:id', (req, res) => {
+    Factura.actualizarFactura(req.params.id, req.body, (error, result) => {
+        if (error) return res.status(500).json({ error: error.message });
+        if (!result || result.affectedRows === 0) return res.status(404).json({ message: 'Factura no encontrada o no se pudo actualizar' });
+        res.status(200).json({ message: 'Factura actualizada exitosamente', factura: result });
+    });
+})
+
 module.exports = router;
