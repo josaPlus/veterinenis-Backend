@@ -82,11 +82,10 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.post('/porFecha', (req, res) => {
-  const { fecha } = req.body;
-
+router.get('/porFecha', (req, res) => {
+  const { fecha } = req.query;
   if (!fecha) {
-    return res.status(400).json({ error: 'Falta el campo "fecha" en el cuerpo de la solicitud' });
+    return res.status(400).json({ error: 'Falta la fecha en el query (yyyy-MM-dd)' });
   }
 
   Cita.getByFecha(fecha, (err, citas) => {
@@ -94,6 +93,7 @@ router.post('/porFecha', (req, res) => {
     res.json(citas);
   });
 });
+
 
 
 router.post('/', (req, res) => {
