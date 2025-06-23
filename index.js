@@ -11,7 +11,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// rutas
+//rutas
+app.use('/api/pacientes', require('./routes/pacientes'))
+app.use('/api/propietarios', require('./routes/propietarios'))
 app.use('/api/facturas', require('./routes/facturas'));
 app.use('/api/productos', require('./routes/productos'));
 
