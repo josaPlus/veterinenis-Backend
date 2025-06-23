@@ -10,7 +10,12 @@ const Cita = {
   },
 
   getPaciente: (id_paciente, cb) => {
-    db.query('SELECT * FROM PACIENTE WHERE id = ?', [id_paciente], cb);
+    const sql = `
+    SELECT id, nombre, especie, sexo, fecha_nacimiento, raza
+    FROM PACIENTE
+    WHERE id = ?
+  `;
+    db.query(sql, [id_paciente], cb);
   },
   getVeterinario: (id_veterinario, cb) => {
     db.query('SELECT * FROM USUARIO WHERE id = ?', [id_veterinario], cb);
