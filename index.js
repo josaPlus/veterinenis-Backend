@@ -11,6 +11,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/pacientes', require('./routes/pacientes'))
+app.use('/propietarios', require('./routes/propietarios'))
+
 
 // conexion database
 db.connect(err => {
