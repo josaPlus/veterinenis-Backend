@@ -11,6 +11,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/citas', require('./routes/citas'));
+app.use('/usuarios', require('./routes/usuarios'));
+
 
 db.connect(err => {
     if (err) {
