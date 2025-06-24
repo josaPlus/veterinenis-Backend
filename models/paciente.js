@@ -1,8 +1,21 @@
 const db = require('../config/database');
 
+
+function toBase64(rows) {
+  return rows.map(r => {
+    if (r.foto_perfil) {
+      r.foto_perfil = r.foto_perfil.toString('base64');
+    }
+    return r;
+  });
+}
+
 const Paciente = {
   getAllBasicInfo: (callback) => {
-    db.query('SELECT * FROM PACIENTE', callback);
+    db.query('SELECT * FROM PACIENTE', (err, rows) => {
+      if (err) return callback(err);
+      callback(null, toBase64(rows));
+    });
   },
 
   getPropietario: (id, callback) => {
@@ -19,15 +32,15 @@ const Paciente = {
 
   getById: (id, callback) => {
     db.query('SELECT * FROM PACIENTE WHERE id = ?', [id], callback);
+    callback(null, toBase64(rows));
   },
   
   filtrar: (nombre, callback) => {
     const sql = "SELECT * FROM PACIENTE P WHERE P.nombre LIKE ? LIMIT 0, 1000;"
-    db.query(
-        sql,
-        [`%${nombre}%`],
-        callback
-    );
+     db.query(sql, [`%${nombre}%`], (err, rows) => {
+      if (err) return callback(err);
+      callback(null, toBase64(rows));
+    });
   },
   
   create: (paciente, callback) => {

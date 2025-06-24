@@ -1,7 +1,9 @@
 const express = require('express');
+const multer  = require('multer');
 const Paciente = require('../models/paciente');
 
 const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', async (req, res) => {
     Paciente.getAllBasicInfo((err, pacientes) => {
@@ -119,13 +121,28 @@ router.get('/vacunas/:id', async (req, res) => {
 });
 
 // Crear un nuevo paciente
-router.post('/', async (req, res) => {
-    Paciente.create(req.body, (error, result) => {
-        if (error) return res.status(500).json({ error: error.message });
-        if (!result) return res.status(404).json({ message: 'No se pudo agregar el paciente' });
-        res.status(201).json({ message: 'Paciente agregado exitosamente', paciente: result });
+router.post(
+  '/',
+  upload.single('foto_perfil'),
+  (req, res) => {
+    const datos = {
+      nombre:           req.body.nombre,
+      especie:          req.body.especie,
+      sexo:             req.body.sexo,
+      fecha_nacimiento: req.body.fecha_nacimiento,
+      raza:             req.body.raza,
+      padecimientos:    req.body.padecimientos,
+      intervenciones:   req.body.intervenciones,
+      foto_perfil:      req.file ? req.file.buffer : null,
+      id_propietario:   req.body.id_propietario
+    };
+
+    Paciente.create(datos, (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ id: result.insertId });
     });
-});
+  }
+);
 
 // Actualizar un paciente
 router.put('/:id', async (req, res) => {
