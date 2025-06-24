@@ -32,6 +32,14 @@ const Usuario = {
       WHERE id = ?
     `;
     db.query(sql, [nombre_usuario, contrasena, rol, id], callback);
+  },
+
+  getAll: (callback) => {
+    const sql = `
+      SELECT id, nombre_usuario, rol, fecha_creacion, nombre_pila
+      FROM USUARIO
+    `;
+    db.query(sql, callback);
   }
 };
 

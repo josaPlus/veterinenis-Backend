@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../models/usuario');
 
+router.get('/', (req, res) => {
+  Usuario.getAll((err, usuarios) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(usuarios);
+  });
+});
+
 router.post('/', (req, res) => {
     console.log('>>> body:', req.body);
   Usuario.create(req.body, (err, result) => {
