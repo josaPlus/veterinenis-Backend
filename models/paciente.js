@@ -2,7 +2,7 @@ const db = require('../config/database');
 
 const Paciente = {
   getAllBasicInfo: (callback) => {
-    db.query('SELECT * FROM PACIENTE', callback);
+    db.query('SELECT id, nombre, especie, sexo, fecha_nacimiento, raza, padecimientos, intervenciones, id_propietario FROM PACIENTE', callback);
   },
 
   getPropietario: (id, callback) => {
